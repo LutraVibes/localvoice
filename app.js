@@ -7,12 +7,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const endCallBtn = document.getElementById('end-call');
 
     const roomSection = document.getElementById('room-section');
+    const verificationSection = document.getElementById('verification-section');
     const callSection = document.getElementById('call-section');
     const roomIdInput = document.getElementById('room-id');
+    const displayRoomId = document.getElementById('display-room-id');
+    const callStatus = document.getElementById('call-status');
+    const callTime = document.getElementById('call-time');
 
     let localStream = null;
     let peerConnection = null;
     let roomId = null;
+    let callStartTime = null;
+    let callTimer = null;
     
     // Constraints for WebRTC
     const constraints = {
@@ -27,8 +33,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function createRoom() {
         roomId = Math.floor(10 + Math.random() * 90).toString();  // Generate a random 2-digit number
-        alert(`Room created with ID: ${roomId}`);
+        displayRoomId.textContent = roomId;
         roomSection.style.display = 'none';
+        verificationSection.style.display = 'block';
         callSection.style.display = 'block';
     }
 
@@ -39,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         roomId = inputRoomId;
-        alert(`Joined room with ID: ${roomId}`);
+        displayRoomId.textContent = roomId;
         roomSection.style.display = 'none';
         callSection.style.display = 'block';
     }
@@ -67,6 +74,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const offer = await peerConnection.createOffer();
             await peerConnection.setLocalDescription(offer);
             // Send offer to the peer
+
+            callStatus.textContent = 'In call';
+            startCallBtn.disabled = true;
+            endCallBtn.disabled = false;
+            callStartTime = new Date();
+            callTimer = setInterval(updateCallTime, 1000);
         } catch (error) {
             console.error('Error starting call:', error);
         }
@@ -81,5 +94,18 @@ document.addEventListener('DOMContentLoaded', () => {
             localStream.getTracks().forEach(track => track.stop());
             localStream = null;
         }
+        callStatus.textContent = 'Not in call';
+        startCallBtn.disabled = false;
+        endCallBtn.disabled = true;
+        clearInterval(callTimer);
+        callTime.textContent = '00:00';
+    }
+
+    function updateCallTime() {
+        const now = new Date();
+        const elapsedTime = Math.floor((now - callStartTime) / 1000);
+        const minutes = String(Math.floor(elapsedTime / 60)).padStart(2, '0');
+        const seconds = String(elapsedTime % 60).padStart(2, '0');
+        callTime.textContent = `${minutes}:${seconds}`;
     }
 });
