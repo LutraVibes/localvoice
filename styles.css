@@ -14,11 +14,23 @@ body {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    width: 300px;
+    width: 320px;
     text-align: center;
 }
 
-button {
+.section {
+    margin-bottom: 20px;
+}
+
+input {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: calc(100% - 22px);
+}
+
+.btn {
     margin: 10px 5px;
     padding: 10px;
     border: none;
@@ -28,16 +40,8 @@ button {
     cursor: pointer;
 }
 
-button:disabled {
+.btn:disabled {
     background-color: #999;
-}
-
-input {
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    width: calc(100% - 22px);
 }
 
 h1 {
