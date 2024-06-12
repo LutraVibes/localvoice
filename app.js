@@ -13,12 +13,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const displayRoomId = document.getElementById('display-room-id');
     const callStatus = document.getElementById('call-status');
     const callTime = document.getElementById('call-time');
+    const participantCount = document.getElementById('participant-count');
 
     let localStream = null;
     let peerConnection = null;
     let roomId = null;
     let callStartTime = null;
     let callTimer = null;
+    let participants = 1; // Starts with the host
     
     // Constraints for WebRTC
     const constraints = {
@@ -34,6 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
     async function createRoom() {
         roomId = Math.floor(10 + Math.random() * 90).toString();  // Generate a random 2-digit number
         displayRoomId.textContent = roomId;
+        participantCount.textContent = participants;
         roomSection.style.display = 'none';
         verificationSection.style.display = 'block';
         callSection.style.display = 'block';
@@ -46,7 +49,9 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         roomId = inputRoomId;
+        participants++;
         displayRoomId.textContent = roomId;
+        participantCount.textContent = participants;
         roomSection.style.display = 'none';
         callSection.style.display = 'block';
     }
