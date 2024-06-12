@@ -14,9 +14,14 @@
             <button id="create-room">Create Room</button>
             <button id="join-room">Join Room</button>
         </div>
+        <div id="verification-section" style="display: none;">
+            <h2>Room ID: <span id="display-room-id"></span></h2>
+        </div>
         <div id="call-section" style="display: none;">
+            <p>Status: <span id="call-status">Not in call</span></p>
+            <p>Call Time: <span id="call-time">00:00</span></p>
             <button id="start-call">Start Call</button>
-            <button id="end-call">End Call</button>
+            <button id="end-call" disabled>End Call</button>
         </div>
     </div>
     <script src="app.js"></script>
