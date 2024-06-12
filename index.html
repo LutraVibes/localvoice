@@ -11,19 +11,18 @@
         <h1>Local Voice Call</h1>
         <div id="room-section" class="section">
             <input type="text" id="room-id" placeholder="Enter Room ID (2 digits)">
-            <button id="create-room">Create Room</button>
-            <button id="join-room">Join Room</button>
+            <button id="create-room" class="btn">Create Room</button>
+            <button id="join-room" class="btn">Join Room</button>
         </div>
         <div id="verification-section" class="section" style="display: none;">
             <h2>Room ID: <span id="display-room-id"></span></h2>
-            <p>People in Room: <span id="people-in-room">1</span></p>
+            <p>Participants: <span id="participant-count">1</span></p>
         </div>
         <div id="call-section" class="section" style="display: none;">
             <p>Status: <span id="call-status">Not in call</span></p>
             <p>Call Time: <span id="call-time">00:00</span></p>
-            <p>People in Call: <span id="people-in-call">0</span></p>
-            <button id="start-call">Start Call</button>
-            <button id="end-call" disabled>End Call</button>
+            <button id="start-call" class="btn">Start Call</button>
+            <button id="end-call" class="btn" disabled>End Call</button>
         </div>
     </div>
     <script src="app.js"></script>
