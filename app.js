@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const callStatus = document.getElementById('call-status');
     const callTime = document.getElementById('call-time');
     const participantCount = document.getElementById('participant-count');
+    const remoteAudio = document.getElementById('remote-audio');
 
     let localStream = null;
     let peerConnection = null;
@@ -21,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let callStartTime = null;
     let callTimer = null;
     let participants = 1; // Starts with the host
-    
+
     // Constraints for WebRTC
     const constraints = {
         audio: true,
@@ -58,27 +59,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function startCall() {
         try {
+            // Use Web Bluetooth API to connect to the other device
+            // Establish WebRTC connection once Bluetooth connection is established
+
             localStream = await navigator.mediaDevices.getUserMedia(constraints);
             peerConnection = new RTCPeerConnection();
-            
+
             localStream.getTracks().forEach(track => {
                 peerConnection.addTrack(track, localStream);
             });
 
             peerConnection.onicecandidate = event => {
                 if (event.candidate) {
-                    // Send candidate to peer
+                    // Send candidate over Bluetooth to the other device
                 }
             };
 
             peerConnection.ontrack = event => {
                 const [remoteStream] = event.streams;
-                // Play remoteStream using audio element
+                remoteAudio.srcObject = remoteStream;
             };
 
             const offer = await peerConnection.createOffer();
             await peerConnection.setLocalDescription(offer);
-            // Send offer to the peer
 
             callStatus.textContent = 'In call';
             startCallBtn.disabled = true;
